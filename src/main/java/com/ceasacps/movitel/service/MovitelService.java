@@ -4,28 +4,42 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
-import com.ceasacps.movitel.model.MovitelModel;
 
 @Service
 public class MovitelService {
 	
-//	@Autowired
-//	MovitelModel movitelModel;
 	
 	int count =0;
-	Double total = 0.0;
-	Double doubleValue = 0.0;
+	Duration total = Duration.ZERO;
+	List<String> listaTempos = new ArrayList<String>();
 	
-	public void read() throws IOException {
+	String duracaoTotal = "";
+	
+	
+	public String getDuracaoTotal() {
+		return duracaoTotal;
+	}
+
+	public void setDuracaoTotal(String duracaoTotal) {
+		this.duracaoTotal = duracaoTotal;
+	}
+
+	public void ObterHorasPorRegiao19() throws IOException {
 		
-		  FileInputStream stream = new FileInputStream("C:\\Users\\fernando.correa\\Documents\\GitHub\\novos\\folder\\movitel/movitel.csv");
+		  FileInputStream stream = new FileInputStream("C:\\Users\\fernando.correa\\Documents\\GitHub\\novos\\folder\\movitel/teste.csv");
 	        InputStreamReader reader = new InputStreamReader(stream);
+	       
 	        try (BufferedReader br = new BufferedReader(reader)) {
-				String linha = br.readLine();
+				
+	        	String linha = br.readLine();
+			
 				while(linha != null) {
 				    System.out.println(linha);
 				    linha = br.readLine();
@@ -33,42 +47,64 @@ public class MovitelService {
 				    try {
 				    	
 				       	String[] textoSeparado = linha.split(";");
+				       	String regiao = textoSeparado[4];
 				       	System.out.println(textoSeparado[4]);
 				       	
-				       	if (textoSeparado[4].contains("Regiao 19"))  {
-				       		System.out.println(textoSeparado[6]);
-				       		String textoTransformado = textoSeparado[6].substring(3);
-				       		String textoFinalemNumero = textoTransformado.replace(":", ".");
-				       		System.out.println("Final: "+textoFinalemNumero);
+				       	if (regiao.contains("Regiao 19"))  {
+				       		
+				       		
+				       		String horaCompleta = textoSeparado[6];
+				       		
+				       		listaTempos.add(horaCompleta);
+				       		
+				       		
+				       	} // fecha o if regiao.contains	
+				       		
 				       	
-				       		Double doubleValue = Double.parseDouble(textoFinalemNumero);
-				       		System.out.println("Double: "+doubleValue);
-				       		total += doubleValue;
-				       		count ++;
-				       		
-				       	}	
-				       		
-				    	
 				    } catch (NullPointerException e) {
-				    	System.out.println("Linha vazia: "+e.getMessage());				    }
+				    	System.out.println("Linha vazia: "+e.getMessage());				 
+				    }
 				    
-				    finally {
-				       	
-				       	
-				       	
-				       	System.out.println("O Total encontrado para a Região 19 foi de: "+total);
-				       	System.out.println("Contador: "+count);
-					/*
-					 * for (int i=0; i<textoSeparado.length; i++) {
-					 * System.out.println(textoSeparado[i]);
-					 * 
-					 * }
-					 */}
-				    
-					System.out.println("O Total de minutos encontrado para a Região 19 foi de: "+total);
-				}
-			}
-	    }
+				    				       	
+				} // fecha o while enquanto houver linha no arquivo
+				
+				calcularListadeHoras(listaTempos);
+				
+				
+			} // fecha o try do bufferRead
+	       
+	    } // fecha o metodo obterHoras por regiao 
 
-	}
+	public void calcularListadeHoras(List<String> totalHoras) {
+		
+		for (String tempo : totalHoras) {
+			
+			String[] partes = tempo.split(":");
+			total=total
+					// somar horas
+					.plusHours(Long.parseLong(partes[0]))
+					.plusMinutes(Long.parseLong(partes[1]))
+					.plusSeconds(Long.parseLong(partes[2]));
+		
+			long totalSegundos = total.getSeconds();
+			// daqui pra baixo é igual ao código anterior
+			
+			long totalHoras1 = totalSegundos / 3600;
+			
+			totalSegundos %= 3600;
+			
+			long totalMinutos = totalSegundos / 60;
+			
+			totalSegundos %= 60;
+			
+			String totalFormatado = String.format("%02d:%02d:%02d", totalHoras1, totalMinutos, totalSegundos);
+			System.out.println(totalFormatado); // 36:00:00
+			
+			setDuracaoTotal(totalFormatado);
+		} // fecha o for do metodo
+		
+		
+	} // fecha o método
+	
+	} // fecha a classe MovitelService
 
