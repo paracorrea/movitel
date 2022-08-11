@@ -1,6 +1,7 @@
 package com.ceasacps.movitel.service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,12 +9,18 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+
+
 
 
 @Service
 public class MovitelService {
+	
+	
+	static final Logger LOG = LogManager.getLogger(MovitelService.class.getName());
 	
 	
 	int count =0;
@@ -33,22 +40,28 @@ public class MovitelService {
 
 	public void ObterHorasPorRegiao19() throws IOException {
 		
-		  FileInputStream stream = new FileInputStream("C:\\Users\\fernando.correa\\Documents\\GitHub\\novos\\folder\\movitel/teste.csv");
-	        InputStreamReader reader = new InputStreamReader(stream);
+		File file = new File("\\\\172.16.252.8\\Mestat$\\movitelFolder\\\\movitel.csv");
+		if (file.exists()) {
+			
+		FileInputStream stream = new FileInputStream(file);
+	       
+		 // FileInputStream stream = new FileInputStream("\\\\172.16.252.8\\mestat$\\movitelFolder/teste.csv");
+	      
+		  InputStreamReader reader = new InputStreamReader(stream);
 	       
 	        try (BufferedReader br = new BufferedReader(reader)) {
 				
 	        	String linha = br.readLine();
 			
 				while(linha != null) {
-				    System.out.println(linha);
+				    LOG.info("Linha capturada: "+linha);
 				    linha = br.readLine();
 				    
 				    try {
 				    	
 				       	String[] textoSeparado = linha.split(";");
 				       	String regiao = textoSeparado[4];
-				       	System.out.println(textoSeparado[4]);
+				        LOG.info("TExto separado"+textoSeparado[4]);
 				       	
 				       	if (regiao.contains("Regiao 19"))  {
 				       		
@@ -62,7 +75,7 @@ public class MovitelService {
 				       		
 				       	
 				    } catch (NullPointerException e) {
-				    	System.out.println("Linha vazia: "+e.getMessage());				 
+				    	 LOG.info("Linha vazia: "+e.getMessage());				 
 				    }
 				    
 				    				       	
@@ -72,6 +85,7 @@ public class MovitelService {
 				
 				
 			} // fecha o try do bufferRead
+		}
 	       
 	    } // fecha o metodo obterHoras por regiao 
 
@@ -98,7 +112,7 @@ public class MovitelService {
 			totalSegundos %= 60;
 			
 			String totalFormatado = String.format("%02d:%02d:%02d", totalHoras1, totalMinutos, totalSegundos);
-			System.out.println(totalFormatado); // 36:00:00
+			 LOG.info("Total formatado: "+totalFormatado); // 36:00:00
 			
 			setDuracaoTotal(totalFormatado);
 		} // fecha o for do metodo

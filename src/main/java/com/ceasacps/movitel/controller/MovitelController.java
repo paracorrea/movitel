@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -23,12 +24,12 @@ public class MovitelController extends MovitelService {
 	}
 	
 	@GetMapping("/lerArquivos")
-	
-	public String lerArquivos() throws IOException {
+		public String lerArquivos(Model model) throws IOException {
 		
 		movitelService.ObterHorasPorRegiao19();
-		//String numeroObtido = movitelService.getDuracaoTotal();
 		
+		String numeroObtido = movitelService.getDuracaoTotal();
+		model.addAttribute("valor",numeroObtido);
 		
 		
 		return "home";
