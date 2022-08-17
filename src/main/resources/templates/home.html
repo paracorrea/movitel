@@ -8,11 +8,18 @@
     <form action="lerArquivos">
      <input type="submit" value="Executar" style="display: block;">
 	</form>
-	
+	   <form action="encerrar">
+     <input type="submit" value="Encerrar" style="display: block;">
+	</form>
 	
 	<h3>
-   		 <span>Total de duração das ligações para "Região 19":  <th:block th:text="${valor}">[valor]</th:block></span>
+   		 <span>Total de horas das ligações para "Região 19":  <th:block th:text="${valor}">[valor]</th:block></span>
 	</h3>
+	<h3>
+   		 <span>Total de minutos das ligações para "Região 19":  <th:block th:text="${tempo}">[valor]</th:block></span>
+	</h3>
+	
+
 </body>
 
 

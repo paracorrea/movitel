@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="movitel/src/movitel.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/movitel/src/test/Movitel.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" mainClassHandleIdentifier="=movitel/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.ceasacps.movitel{MovitelApplication.java[MovitelApplication" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=movitel/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/"/>
+        <file path="/movitel/.project"/>
+        <file path="/movitel/mvnw"/>
+        <javaElement handleIdentifier="=movitel/src\/main\/resources=/maven.pomderived=/true=/"/>
+        <javaElement handleIdentifier="=movitel/src\/test\/java=/optional=/true=/=/maven.pomderived=/true=/=/test=/true=/"/>
+        <folder path="/movitel/target"/>
+        <file path="/movitel/pom.xml"/>
+        <folder path="/movitel/src"/>
+        <file path="/movitel/.classpath"/>
+        <file path="/movitel/mvnw.cmd"/>
+        <file path="/movitel/HELP.md"/>
+        <file path="/movitel/.gitignore"/>
+    </selectedElements>
+</jardesc>

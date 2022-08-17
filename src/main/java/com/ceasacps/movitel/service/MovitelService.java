@@ -29,12 +29,39 @@ public class MovitelService {
 	
 	String duracaoTotal = "";
 	
+	String tempo = "";
 	
+	public void setTempo(String tempo) {
+		
+		
+		String[] partes1 = tempo.split(":");
+		
+		long horas = Long.parseLong(partes1[0]);
+		long horas1 = horas *60;
+		
+		long minutos = Long.parseLong(partes1[1]);
+		
+		long horasMaisMinutos=horas1+minutos;
+		
+		String horasFormatado = String.format("%04d",horasMaisMinutos);
+		
+		this.tempo=horasFormatado;
+		
+	}
+	
+	public String getTempo() {
+		return tempo;
+	}
+
+
 	public String getDuracaoTotal() {
+		
 		return duracaoTotal;
 	}
 
 	public void setDuracaoTotal(String duracaoTotal) {
+		
+		
 		this.duracaoTotal = duracaoTotal;
 	}
 
@@ -54,14 +81,14 @@ public class MovitelService {
 	        	String linha = br.readLine();
 			
 				while(linha != null) {
-				    LOG.info("Linha capturada: "+linha);
+				   // LOG.info("Linha capturada: "+linha);
 				    linha = br.readLine();
 				    
 				    try {
 				    	
 				       	String[] textoSeparado = linha.split(";");
 				       	String regiao = textoSeparado[4];
-				        LOG.info("TExto separado"+textoSeparado[4]);
+				       // LOG.info("TExto separado"+textoSeparado[4]);
 				       	
 				       	if (regiao.contains("Regiao 19"))  {
 				       		
@@ -90,6 +117,7 @@ public class MovitelService {
 	    } // fecha o metodo obterHoras por regiao 
 
 	public void calcularListadeHoras(List<String> totalHoras) {
+		String totalFormatado="";
 		
 		for (String tempo : totalHoras) {
 			
@@ -105,19 +133,24 @@ public class MovitelService {
 			
 			long totalHoras1 = totalSegundos / 3600;
 			
+		
+			
 			totalSegundos %= 3600;
 			
+			
 			long totalMinutos = totalSegundos / 60;
+		
 			
 			totalSegundos %= 60;
 			
-			String totalFormatado = String.format("%02d:%02d:%02d", totalHoras1, totalMinutos, totalSegundos);
-			 LOG.info("Total formatado: "+totalFormatado); // 36:00:00
+			totalFormatado = String.format("%02d:%02d:%02d", totalHoras1, totalMinutos, totalSegundos);
 			
 			setDuracaoTotal(totalFormatado);
+			setTempo(totalFormatado);
 		} // fecha o for do metodo
 		
-		
+			
+			
 	} // fecha o método
 	
 	} // fecha a classe MovitelService

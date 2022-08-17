@@ -20,8 +20,16 @@ public class MovitelController extends MovitelService {
 	@GetMapping("/home")
 	public String home() {
 		
-		return "Home";
+		return "home";
 	}
+	
+	@GetMapping("/encerrar")
+	public String encerrar() {
+		
+		System.exit(1);
+		return "home";
+	}
+	
 	
 	@GetMapping("/lerArquivos")
 		public String lerArquivos(Model model) throws IOException {
@@ -29,7 +37,13 @@ public class MovitelController extends MovitelService {
 		movitelService.ObterHorasPorRegiao19();
 		
 		String numeroObtido = movitelService.getDuracaoTotal();
+		
+		String tempoObtido = movitelService.getTempo();
+		
+		model.addAttribute("tempo", tempoObtido);
 		model.addAttribute("valor",numeroObtido);
+		
+		
 		
 		
 		return "home";
